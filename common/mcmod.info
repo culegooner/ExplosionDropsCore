@@ -1,0 +1,20 @@
+[
+{
+  "modid": "ExplosionDropsCore",
+  "name": "ExplosionDropsCore",
+  "description": "ExplosionDropsCore",
+  "version": "1.0.0",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "culegooner"
+  ],
+  "credits": "By culegooner",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]
