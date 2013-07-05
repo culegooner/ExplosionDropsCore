@@ -33,7 +33,7 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 		 	String targetMethodName = "";
 	        
 	        if(obfuscated == true)
-	        	targetMethodName ="func_77279_a";
+	        	targetMethodName ="a";
 	        else
 	        	targetMethodName ="doExplosionB";
 	        
