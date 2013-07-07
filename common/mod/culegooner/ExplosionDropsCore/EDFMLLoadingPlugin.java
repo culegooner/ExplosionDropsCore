@@ -15,6 +15,7 @@ public class EDFMLLoadingPlugin implements cpw.mods.fml.relauncher.IFMLLoadingPl
 
 	@Override
 	public String[] getASMTransformerClass() {
+		//This will return the name of the class "mod.culegooner.ExplosionDropsCore.EDClassTransformer"
 		return new String[]{EDClassTransformer.class.getName()};
 	}
 

@@ -37,16 +37,16 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 	        else
 	        	targetMethodName ="doExplosionB";
 	        
-	        if(targetMethodName == "")
-	        	return bytes;
-	        
-	        
+
+	      //set up ASM class manipulation stuff. Consult the ASM docs for details
 		    ClassNode classNode = new ClassNode();
 	        ClassReader classReader = new ClassReader(bytes);
 	        classReader.accept(classNode, 0);
 	        
 	        
 	       
+	      //Now we loop over all of the methods declared inside the Explosion class until we get to the targetMethodName "doExplosionB"
+
 	        // find method to inject into
 	        @SuppressWarnings("unchecked")
 	        Iterator<MethodNode> methods = classNode.methods.iterator();
@@ -56,7 +56,7 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 	            System.out.println("********* Method Name: "+m.name + " Desc:" + m.desc);
 	            int fdiv_index = -1;
 	            
-	            
+	          //Check if this is doExplosionB and it's method signature is (Z)V which means that it accepts a boolean (Z) and returns a void (V)
 	            if ((m.name.equals(targetMethodName) && m.desc.equals("(Z)V")))
 	            {
 	                System.out.println("********* Inside target method!");
@@ -72,13 +72,14 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 	               
 	                int index = -1;
 	                
+	              //Loop over the instruction set and find the instruction FDIV which does the division of 1/explosionSize
 	                while (iter.hasNext())
 	                {
 	                    index++;
 	                    currentNode = iter.next();
 	                    System.out.println("********* index : " + index + " currentNode.getOpcode() = " + currentNode.getOpcode());
 	                   
-	                    
+	                  //Found it! save the index location of instruction FDIV and the node for this instruction
 	                    if (currentNode.getOpcode() == FDIV)
 	                    {
 	                    	targetNode = currentNode;
@@ -86,10 +87,7 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 	                    }
 	                }
 	            
-	                //2013-07-05 18:32:29 [INFO] [STDOUT] ********* index : 336 currentNode.getOpcode() = 110
-	                
-	                System.out.println("********* fdiv_index should be 336 -> " + fdiv_index);
-	                
+
 	                /*
                     
 	            	2013-07-05 18:32:29 [INFO] [STDOUT] ********* index : 334 currentNode.getOpcode() = 25
@@ -97,6 +95,10 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 					2013-07-05 18:32:29 [INFO] [STDOUT] ********* index : 336 currentNode.getOpcode() = 110
 
 	            	 */
+	                
+	                System.out.println("********* fdiv_index should be 336 -> " + fdiv_index);
+	                
+	                
 	                
 	                
 	                if (targetNode == null)
@@ -112,6 +114,8 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 	                }
 	               
 	                /*
+	                 //now we want the save nods that load the variable explosionSize and the division instruction:
+
 	                 The line in Explosion.java that we want to modify is:
 	                 
 	                 var25.dropBlockAsItemWithChance(this.worldObj, var4, var5, var6, this.worldObj.getBlockMetadata(var4, var5, var6), 1.0F / this.explosionSize, 0);
@@ -130,13 +134,17 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 	                AbstractInsnNode remNode2 = m.instructions.get(fdiv_index-1); // mv.visitFieldInsn(GETFIELD, "net/minecraft/src/Explosion", "explosionSize", "F");
 	                AbstractInsnNode remNode3 = m.instructions.get(fdiv_index);   // mv.visitInsn(FDIV);
 	               
+	              //just remove these nodes from the instruction set, this will prevent the instruction FCONST_1 to be divided.
+
 	                m.instructions.remove(remNode1);
 	                m.instructions.remove(remNode2);
 	                m.instructions.remove(remNode3);
 	                
 	                
+	              //in this commented section, i'll just illustrate how to inject a call to a static method if your instruction is a little more advanced than just removing a couple of instruction:
+
 	                /*
-	                To add new instructions, such as calling a static method can be done like so:
+	                //To add new instructions, such as calling a static method can be done like so:
 	                
 	                // make new instruction list
 	                InsnList toInject = new InsnList();
@@ -153,6 +161,7 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 	            }
 	        }
 	        
+	      //ASM specific for cleaning up and returning the final bytes for JVM processing.
 	        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 	        classNode.accept(writer);
 	        return writer.toByteArray();
