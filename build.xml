@@ -8,6 +8,8 @@
 		<delete file="${build.dir.development}\forge\mcp\src\minecraft\mcmod.info" />
 		<delete dir="${build.dir.development}\forge\mcp\src\minecraft\${build.release.mod.package}\${build.release.mod.author}" />
 		<delete dir="${build.dir.development}\forge\mcp\src\minecraft\${build.release.mod.package}" />
+        <delete dir="${build.dir.development}\forge\mcp\bin\minecraft\${build.release.mod.package}\${build.release.mod.author}" />
+		<delete dir="${build.dir.development}\forge\mcp\bin\minecraft\${build.release.mod.package}" />
 		<delete dir="${build.dir.development}\reobf\minecraft" />
 	</target>
 	

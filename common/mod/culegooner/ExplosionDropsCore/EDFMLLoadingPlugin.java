@@ -1,4 +1,4 @@
-package mod.culegooner;
+package mod.culegooner.ExplosionDropsCore;
 
 import java.util.Map;
 
