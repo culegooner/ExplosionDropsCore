@@ -4,7 +4,7 @@ import java.util.Map;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 
-@MCVersion(value = "1.6.1")
+@MCVersion(value = "1.6.2")
 public class EDFMLLoadingPlugin implements cpw.mods.fml.relauncher.IFMLLoadingPlugin {
 
 	@Override

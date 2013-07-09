@@ -3,8 +3,8 @@
   "modid": "ExplosionDropsCore",
   "name": "ExplosionDropsCore",
   "description": "ExplosionDropsCore",
-  "version": "1.0.1",
-  "url": "",
+  "version": "@VERSION@",
+  "url": "https://github.com/culegooner/ExplosionDropsCore",
   "updateUrl": "",
   "authorList": [
     "culegooner"

@@ -16,7 +16,7 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 	@Override
 	public byte[] transform(String arg0, String arg1, byte[] arg2) {
 		
-		if (arg0.equals("abm")) {
+		if (arg0.equals("abq")) {
 			System.out.println("********* INSIDE OBFUSCATED EXPLOSION TRANSFORMER ABOUT TO PATCH: " + arg0);
 			return patchClassASM(arg0, arg2, true);
         }
