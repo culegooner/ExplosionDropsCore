@@ -21,8 +21,8 @@ public class EDFMLLoadingPlugin implements cpw.mods.fml.relauncher.IFMLLoadingPl
 
 	@Override
 	public String getModContainerClass() {
-		// TODO Auto-generated method stub
-		return null;
+		//This is the name of our dummy container "mod.culegooner.ExplosionDropsCore.EDDummyContainer"
+		return EDDummyContainer.class.getName();
 	}
 
 	@Override
