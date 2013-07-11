@@ -1,6 +1,8 @@
 package mod.culegooner.ExplosionDropsCore;
 
 import static org.objectweb.asm.Opcodes.FDIV;
+import static org.objectweb.asm.Opcodes.INVOKEVIRTUAL;
+import static org.objectweb.asm.tree.AbstractInsnNode.METHOD_INSN;
 
 import java.util.Iterator;
 
@@ -8,6 +10,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 
@@ -134,6 +137,23 @@ public class EDClassTransformer implements net.minecraft.launchwrapper.IClassTra
 	                AbstractInsnNode remNode2 = m.instructions.get(fdiv_index-1); // mv.visitFieldInsn(GETFIELD, "net/minecraft/src/Explosion", "explosionSize", "F");
 	                AbstractInsnNode remNode3 = m.instructions.get(fdiv_index);   // mv.visitInsn(FDIV);
 	               
+	                //This part is just to show how if the opcode we are looking for is an invokevirtual
+	                
+	                AbstractInsnNode invVirt = m.instructions.get(fdiv_index+2);
+	                if(invVirt.getOpcode() == INVOKEVIRTUAL)
+	                {
+	                	if(invVirt.getType() == METHOD_INSN){
+	                		 System.out.println("INVOKEVIRTUAL opcode is  " + invVirt.getOpcode() + " METHOD_INSN type is " + invVirt.getType()  );
+	     	                
+	                		 MethodInsnNode testMethod = (MethodInsnNode)invVirt; //only do this cast if the getType match to a MethodInsnNode!! look at the javadoc for the other types!
+	                		 System.out.println("INVOKEVIRTUAL :" + testMethod.owner + " , " +  testMethod.name + " , " + testMethod.desc );
+	                	}
+	                }
+	                
+	                
+	          
+	                
+	                
 	              //just remove these nodes from the instruction set, this will prevent the instruction FCONST_1 to be divided.
 
 	                m.instructions.remove(remNode1);
