@@ -27,6 +27,8 @@
 	</target>
 	
 	<target name="replace_tokens">
+        <replace file="${build.dir.development}\forge\mcp\src\minecraft\mcmod.info" token="@VERSION@" value="${build.release.mod.version}" />
+		<replace file="${build.dir.development}\forge\mcp\src\minecraft\mcmod.info" token="@BUILD_NUMBER@" value="${build_number.build_number}" />
 		<replace dir="${build.dir.development}\forge\mcp\src\minecraft\${build.release.mod.package}" token="@VERSION@" value="${build.release.mod.version}" />
 		<replace dir="${build.dir.development}\forge\mcp\src\minecraft\${build.release.mod.package}" token="@BUILD_NUMBER@" value="${build_number.build_number}" />
         <replace dir="${build.dir.development}\forge\mcp\src\minecraft\assets" token="@VERSION@" value="${build.release.mod.version}" />
