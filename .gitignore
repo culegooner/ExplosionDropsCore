@@ -1,5 +1,4 @@
-.classpath
-.project
 *.class
+build_number.properties
 /bin
 /build

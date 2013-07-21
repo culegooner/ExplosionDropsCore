@@ -1,5 +1,5 @@
 <?xml version="1.0" ?> 
-<project name="BuildCoreMod" default="build">
+<project name="BuildMod" default="build">
 	
 	<property file="build.properties" prefix="build"/>
 	<property file="build_number.properties" prefix="build_number"/>
@@ -8,7 +8,8 @@
 		<delete file="${build.dir.development}\forge\mcp\src\minecraft\mcmod.info" />
 		<delete dir="${build.dir.development}\forge\mcp\src\minecraft\${build.release.mod.package}\${build.release.mod.author}" />
 		<delete dir="${build.dir.development}\forge\mcp\src\minecraft\${build.release.mod.package}" />
-        <delete dir="${build.dir.development}\forge\mcp\bin\minecraft\${build.release.mod.package}\${build.release.mod.author}" />
+        <delete dir="${build.dir.development}\forge\mcp\src\minecraft\assets" />
+		<delete dir="${build.dir.development}\forge\mcp\bin\minecraft\${build.release.mod.package}\${build.release.mod.author}" />
 		<delete dir="${build.dir.development}\forge\mcp\bin\minecraft\${build.release.mod.package}" />
 		<delete dir="${build.dir.development}\reobf\minecraft" />
 	</target>
@@ -26,8 +27,10 @@
 	</target>
 	
 	<target name="replace_tokens">
-		<replace dir="${build.dir.development}\forge\mcp\src\minecraft" token="@VERSION@" value="${build.release.mod.version}" />
-		<replace dir="${build.dir.development}\forge\mcp\src\minecraft" token="@BUILD_NUMBER@" value="${build_number.build_number}" />
+		<replace dir="${build.dir.development}\forge\mcp\src\minecraft\${build.release.mod.package}" token="@VERSION@" value="${build.release.mod.version}" />
+		<replace dir="${build.dir.development}\forge\mcp\src\minecraft\${build.release.mod.package}" token="@BUILD_NUMBER@" value="${build_number.build_number}" />
+        <replace dir="${build.dir.development}\forge\mcp\src\minecraft\assets" token="@VERSION@" value="${build.release.mod.version}" />
+		<replace dir="${build.dir.development}\forge\mcp\src\minecraft\assets" token="@BUILD_NUMBER@" value="${build_number.build_number}" />
 	</target>
 	
 	<target name="recompile">
@@ -61,10 +64,11 @@
 		<jar destfile="${build.dir.modsrc}\${build.release.mod.name}\${build.dir.release}\${build.release.minecraft.version}\${build.release.mod.version}\${build.release.mod.name}-${build.release.mod.version}-${build_number.build_number}.jar" duplicate="preserve" index="true" manifestencoding="UTF-8" manifest="./MANIFEST.MF">
 			<fileset dir="${build.dir.development}\forge\mcp\src\minecraft\" includes="mcmod.info" />
 			<fileset dir="${build.dir.development}\forge\mcp\reobf\minecraft" />
+            <fileset dir="${build.dir.development}\forge\mcp\src\minecraft\" includes="assets/" />
 			<fileset dir="${build.dir.modsrc}\${build.release.mod.name}" includes="README.md" />
 			<fileset dir="${build.dir.modsrc}\${build.release.mod.name}" includes="COPYING" />
 			<fileset dir="${build.dir.modsrc}\${build.release.mod.name}" includes="COPYING.LESSER" />
-			<fileset dir="${build.dir.modsrc}\${build.release.mod.name}" includes="*.class" />
+            <fileset dir="${build.dir.modsrc}\${build.release.mod.name}" includes="*.class" />
 		</jar>
 		
 		<!-- Clean up the MCP source now that we are done -->
@@ -85,10 +89,11 @@
 		<jar destfile="${build.dir.modsrc}\${build.release.mod.name}\${build.dir.release}\${build.release.minecraft.version}\${build.release.mod.version}\${build.release.mod.name}-${build.release.mod.version}-${build_number.build_number}.jar" duplicate="preserve" index="true" manifestencoding="UTF-8" manifest="./MANIFEST.MF">
 			<fileset dir="${build.dir.development}\forge\mcp\src\minecraft\" includes="mcmod.info" />
 			<fileset dir="${build.dir.development}\forge\mcp\reobf\minecraft" />
+            <fileset dir="${build.dir.development}\forge\mcp\src\minecraft\" includes="assets/" />
 			<fileset dir="${build.dir.modsrc}\${build.release.mod.name}" includes="README.md" />
 			<fileset dir="${build.dir.modsrc}\${build.release.mod.name}" includes="COPYING" />
 			<fileset dir="${build.dir.modsrc}\${build.release.mod.name}" includes="COPYING.LESSER" />
-			<fileset dir="${build.dir.modsrc}\${build.release.mod.name}" includes="*.class" />
+            <fileset dir="${build.dir.modsrc}\${build.release.mod.name}" includes="*.class" />
 		</jar>
 				
 		<!-- Clean up the MCP source now that we are done -->
